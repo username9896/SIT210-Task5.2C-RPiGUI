@@ -1,0 +1,78 @@
+from tkinter import*
+import tkinter.font
+from gpiozero import LED
+import RPi.GPIO
+RPi.GPIO.setmode(RPi.GPIO.BCM)
+
+redled = LED(14)
+whiteled = LED(15)
+greenled = LED(18)
+
+win = Tk()
+
+win.title("Blink the LED")
+normalFont = tkinter.font.Font(size = 14, weight = "bold")
+
+def ledToggle():
+
+	if redled.is_lit:
+		redled.off()
+		ledButton["text"] = "Turn on red LED"
+	else:
+		redled.on()
+		whiteled.off()
+		ledButton1["text"] = "Turn on white LED"
+		greenled.off()
+		ledButton2["text"] = "Turn on green LED"
+		ledButton["text"] = "Turn off red LED"
+
+def ledToggle1():
+	if whiteled.is_lit:
+		whiteled.off()
+		ledButton1["text"] = "Turn on white LED"
+	else:
+		whiteled.on()
+		greenled.off()
+		ledButton2["text"] = "Turn on green LED"
+		redled.off()
+		ledButton["text"] = "Turn on red LED"
+		ledButton1["text"] = "Turn off white LED"
+
+def ledToggle2():
+	if greenled.is_lit:
+		greenled.off()
+		ledButton2["text"] = "Turn on green LED"
+	else:
+		greenled.on()
+		ledButton2["text"] = "Turn off green LED"
+		whiteled.off()
+		ledButton1["text"] = "Turn on white LED"
+		redled.off()
+		ledButton["text"] = "Turn on red LED"
+
+def reset():
+    whiteled.off()
+    greenled.off()
+    redled.off()
+
+def BlinkAll():
+    whiteled.on()
+    greenled.on()
+    redled.on()
+
+def close():
+    RPi.GPIO.cleanup()
+    win.destroy()
+
+ledButton = Button(win, font = normalFont, command = ledToggle, text = 'Turn on red LED', bg = 'red', height = 1, width = 30)
+ledButton1 = Button(win, font = normalFont, command = ledToggle1, text = 'Turn on white LED' ,bg = 'white', height = 1, width = 30)
+ledButton2 = Button(win, font = normalFont, command = ledToggle2, text = 'Turn on green LED', bg = 'green', height = 1, width = 30)
+Exitbotton = Button(win, text = 'Exit', font = normalFont, command = close, bg = 'purple', height = 1, width = 10)
+resetbotton = Button(win, text = 'Reset', font = normalFont, command = reset, bg = 'blue', height = 1, width = 15)
+blinkbotton = Button(win, text = 'Blink All LEDs', font = normalFont, command = BlinkAll, bg = 'pink', height = 1, width = 20)
+ledButton.grid(row = 0, column = 0)
+ledButton1.grid(row = 1, column = 0)
+ledButton2.grid(row = 2, column = 0)
+blinkbotton.grid(row = 3, column = 0)
+resetbotton.grid(row = 4, column = 0)
+Exitbotton.grid(row = 5, column = 0)
