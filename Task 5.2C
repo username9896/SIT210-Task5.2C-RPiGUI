@@ -14,7 +14,6 @@ win.title("Blink the LED")
 normalFont = tkinter.font.Font(size = 14, weight = "bold")
 
 def ledToggle():
-
 	if redled.is_lit:
 		redled.off()
 		ledButton["text"] = "Turn on red LED"
